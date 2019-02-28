@@ -1,0 +1,82 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.util.List;
+
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+
+import ar.com.mateo.tpfinal.model.Cliente;
+
+
+public class ModeloTablaCliente implements TableModel {
+	private List<Cliente> lista;
+	private String[] titulos = "ID,Nombre,Apellido,Direccion,Telefono,DNI".split(",");
+	@SuppressWarnings("rawtypes")
+	private Class[] tipos = new Class[] { Integer.class, String.class, String.class, String.class, String.class,
+			String.class };;
+
+	
+	public ModeloTablaCliente(List<Cliente> lista) {
+		super();
+		this.lista = lista;
+	}
+
+		
+
+	public List<Cliente> getLista() {
+		return lista;
+	}
+
+	public void setLista(List<Cliente> lista) {
+		this.lista = lista;
+	}
+
+	public int getRowCount() {
+		return lista.size();
+	}
+
+	public int getColumnCount() {
+		return titulos.length;
+	}
+
+	public String getColumnName(int columnIndex) {
+
+		return titulos[columnIndex];
+	}
+
+	public Class<?> getColumnClass(int columnIndex) {
+		return tipos[columnIndex];
+	}
+
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return false;
+	}
+
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		if (columnIndex == 0) {
+			return lista.get(rowIndex).getIdCliente();
+		} else if (columnIndex == 1) {
+			return lista.get(rowIndex).getNombre();
+		} else if (columnIndex == 2) {
+			return lista.get(rowIndex).getApellido();
+		} else if (columnIndex == 3) {
+			return lista.get(rowIndex).getDireccion();
+		} else if (columnIndex == 4) {
+			return lista.get(rowIndex).getTelefono();
+		} else if (columnIndex == 5) {
+			return lista.get(rowIndex).getDNI();
+		} else {
+			return null;
+		}
+	}
+
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+	}
+
+	public void addTableModelListener(TableModelListener l) {
+	}
+
+	public void removeTableModelListener(TableModelListener l) {
+
+	}
+}

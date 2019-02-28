@@ -1,0 +1,244 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import ar.com.mateo.tpfinal.jdbc.CategoriaDAO;
+import ar.com.mateo.tpfinal.jdbc.ClienteDAO;
+import ar.com.mateo.tpfinal.jdbc.MarcaDAO;
+import ar.com.mateo.tpfinal.jdbc.PersistenciaException;
+import ar.com.mateo.tpfinal.jdbc.ProductoDAO;
+import ar.com.mateo.tpfinal.model.Categoria;
+import ar.com.mateo.tpfinal.model.Cliente;
+import ar.com.mateo.tpfinal.model.Marca;
+import ar.com.mateo.tpfinal.model.Producto;
+
+import java.awt.GridBagLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.GridBagConstraints;
+import javax.swing.JTextField;
+import java.awt.Insets;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.awt.event.ActionEvent;
+
+public class AgregaModificaCliente extends JDialog {
+
+	private final JPanel contentPanel = new JPanel();
+	private JTextField txtID;
+	private JTextField txtNombre;
+	private JTextField txtApellido;
+	private JTextField txtDirec;
+	private JTextField txtTelefono;
+	private JTextField txtDNI;
+	private Cliente cliente;
+	
+
+
+
+	/**
+	 * Create the dialog.
+	 */
+	public AgregaModificaCliente(Frame parent,boolean Alta,Cliente cliente) {
+		super(parent, true);
+		this.cliente = cliente;
+		setBounds(100, 100, 450, 300);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		GridBagLayout gbl_contentPanel = new GridBagLayout();
+		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		contentPanel.setLayout(gbl_contentPanel);
+		{
+			JLabel lblId = new JLabel("ID");
+			GridBagConstraints gbc_lblId = new GridBagConstraints();
+			gbc_lblId.insets = new Insets(0, 0, 5, 5);
+			gbc_lblId.anchor = GridBagConstraints.EAST;
+			gbc_lblId.gridx = 0;
+			gbc_lblId.gridy = 0;
+			contentPanel.add(lblId, gbc_lblId);
+		}
+		{
+			txtID = new JTextField();
+			GridBagConstraints gbc_txtID = new GridBagConstraints();
+			gbc_txtID.insets = new Insets(0, 0, 5, 0);
+			gbc_txtID.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtID.gridx = 2;
+			gbc_txtID.gridy = 0;
+			contentPanel.add(txtID, gbc_txtID);
+			txtID.setColumns(10);
+		}
+		{
+			JLabel lblNombre = new JLabel("Nombre");
+			GridBagConstraints gbc_lblNombre = new GridBagConstraints();
+			gbc_lblNombre.insets = new Insets(0, 0, 5, 5);
+			gbc_lblNombre.gridx = 0;
+			gbc_lblNombre.gridy = 1;
+			contentPanel.add(lblNombre, gbc_lblNombre);
+		}
+		{
+			txtNombre = new JTextField();
+			GridBagConstraints gbc_txtNombre = new GridBagConstraints();
+			gbc_txtNombre.insets = new Insets(0, 0, 5, 0);
+			gbc_txtNombre.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtNombre.gridx = 2;
+			gbc_txtNombre.gridy = 1;
+			contentPanel.add(txtNombre, gbc_txtNombre);
+			txtNombre.setColumns(10);
+		}
+		{
+			JLabel lblApellido = new JLabel("Apellido");
+			GridBagConstraints gbc_lblApellido = new GridBagConstraints();
+			gbc_lblApellido.insets = new Insets(0, 0, 5, 5);
+			gbc_lblApellido.gridx = 0;
+			gbc_lblApellido.gridy = 2;
+			contentPanel.add(lblApellido, gbc_lblApellido);
+		}
+		{
+			txtApellido = new JTextField();
+			GridBagConstraints gbc_txtApellido = new GridBagConstraints();
+			gbc_txtApellido.insets = new Insets(0, 0, 5, 0);
+			gbc_txtApellido.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtApellido.gridx = 2;
+			gbc_txtApellido.gridy = 2;
+			contentPanel.add(txtApellido, gbc_txtApellido);
+			txtApellido.setColumns(10);
+		}
+		{
+			JLabel lblDni = new JLabel("DNI");
+			GridBagConstraints gbc_lblDni = new GridBagConstraints();
+			gbc_lblDni.insets = new Insets(0, 0, 5, 5);
+			gbc_lblDni.gridx = 0;
+			gbc_lblDni.gridy = 4;
+			contentPanel.add(lblDni, gbc_lblDni);
+		}
+		{
+			txtDNI = new JTextField();
+			GridBagConstraints gbc_txtDNI = new GridBagConstraints();
+			gbc_txtDNI.insets = new Insets(0, 0, 5, 0);
+			gbc_txtDNI.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtDNI.gridx = 2;
+			gbc_txtDNI.gridy = 4;
+			contentPanel.add(txtDNI, gbc_txtDNI);
+			txtDNI.setColumns(10);
+		}
+		{
+			JLabel lblDireccion = new JLabel("Direccion");
+			GridBagConstraints gbc_lblDireccion = new GridBagConstraints();
+			gbc_lblDireccion.insets = new Insets(0, 0, 5, 5);
+			gbc_lblDireccion.gridx = 0;
+			gbc_lblDireccion.gridy = 5;
+			contentPanel.add(lblDireccion, gbc_lblDireccion);
+		}
+		{
+			txtDirec = new JTextField();
+			GridBagConstraints gbc_txtDirec = new GridBagConstraints();
+			gbc_txtDirec.insets = new Insets(0, 0, 5, 0);
+			gbc_txtDirec.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtDirec.gridx = 2;
+			gbc_txtDirec.gridy = 5;
+			contentPanel.add(txtDirec, gbc_txtDirec);
+			txtDirec.setColumns(10);
+		}
+		{
+			JLabel lblTelefono = new JLabel("Telefono");
+			GridBagConstraints gbc_lblTelefono = new GridBagConstraints();
+			gbc_lblTelefono.insets = new Insets(0, 0, 5, 5);
+			gbc_lblTelefono.gridx = 0;
+			gbc_lblTelefono.gridy = 6;
+			contentPanel.add(lblTelefono, gbc_lblTelefono);
+		}
+		{
+			txtTelefono = new JTextField();
+			GridBagConstraints gbc_txtTelefono = new GridBagConstraints();
+			gbc_txtTelefono.insets = new Insets(0, 0, 5, 0);
+			gbc_txtTelefono.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtTelefono.gridx = 2;
+			gbc_txtTelefono.gridy = 6;
+			contentPanel.add(txtTelefono, gbc_txtTelefono);
+			txtTelefono.setColumns(10);
+		}
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						try {
+							altaModifica(Alta);
+						} catch (PersistenciaException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+				});
+				okButton.setActionCommand("OK");
+				buttonPane.add(okButton);
+				getRootPane().setDefaultButton(okButton);
+			}
+			{
+				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
+				cancelButton.setActionCommand("Cancel");
+				buttonPane.add(cancelButton);
+			}
+			init();
+		}
+	}
+
+	private void init() {
+		if (cliente == null) {
+			setTitle("Nuevo Cliente");
+
+		} else {
+			setTitle("Edita Cliente");
+			txtID.setText(cliente.getIdCliente()+ "");
+			txtNombre.setText(cliente.getNombre());
+			txtApellido.setText(cliente.getApellido());
+			txtDNI.setText(cliente.getDNI()+"");
+			txtDirec.setText(cliente.getDireccion());
+			txtTelefono.setText(cliente.getTelefono());
+		}
+	}
+	private void altaModifica(boolean Alta) throws PersistenciaException{ 
+		ClienteDAO cDAO=new ClienteDAO();
+		try {
+			if (Alta) {
+				Cliente cl= new Cliente(Integer.parseInt(txtID.getText()),txtNombre.getText(),txtApellido.getText(),txtDNI.getText(),txtDirec.getText(),txtTelefono.getText());
+				cDAO.insert(cl);
+				return;
+			}
+
+			else {
+
+				Cliente cl= new Cliente(Integer.parseInt(txtID.getText()),txtNombre.getText(),txtApellido.getText(),txtDNI.getText(),txtDirec.getText(),txtTelefono.getText());
+				cDAO.update(cl);
+				return;
+			}
+		} catch (
+
+		PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Error de persistensia.", "Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+			return;
+		}
+	}
+}

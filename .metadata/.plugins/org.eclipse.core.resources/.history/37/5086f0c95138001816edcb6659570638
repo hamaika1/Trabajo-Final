@@ -1,0 +1,83 @@
+package ar.com.mateo.tpfinal.jdbc;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import ar.com.mateo.tpfinal.model.Cliente;
+
+public class ClienteDAO implements GenericDAO<Cliente, Integer> {
+
+	@Override
+	public List<Cliente> list() throws PersistenciaException {
+		List<Cliente> r = new ArrayList<Cliente>();
+		try {
+			ResultSet rs = Util.createStatement().executeQuery("SELECT * FROM Cliente ");
+			while (rs.next()) {
+
+				r.add(new Cliente(rs.getInt("idCliente"), rs.getString("Nombre"), rs.getString("Apellido"),
+						rs.getString("Direccion"), rs.getString("Telefono"), rs.getString("DNI")));
+
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new PersistenciaException(e.getMessage(), e);
+		}
+		return r;
+	}
+
+	@Override
+	public Cliente insert(Cliente entidad) throws PersistenciaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Cliente update(Cliente entidad) throws PersistenciaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(Cliente entidad) throws PersistenciaException {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Cliente load(Integer id) throws PersistenciaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public static Cliente ConsultaCliente() throws SQLException {
+		String sql = "SELECT * FROM Cliente";
+		
+		ResultSet rs = null;
+		Cliente cliente = null;
+		try {
+			rs = Conection.getConnection().createStatement().executeQuery(sql);
+			while (rs.next()) {
+				cliente = new Cliente();
+				cliente.setApellido(rs.getString("Apellido"));
+				cliente.setDireccion(rs.getString("Direccion"));
+				cliente.setDNI(rs.getString("DNI"));
+				cliente.setIdCliente(rs.getInt("idCliente"));
+				cliente.setNombre(rs.getString("Nombre"));
+				cliente.setTelefono(rs.getString("Telefono"));
+
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		rs.close();
+		return cliente;
+		
+	}
+	
+
+}

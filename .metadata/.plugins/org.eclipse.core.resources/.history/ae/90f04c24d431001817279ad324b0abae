@@ -1,0 +1,259 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import ar.com.mateo.tpfinal.jdbc.*;
+import ar.com.mateo.tpfinal.model.Producto;
+import ar.com.mateo.tpfinal.model.Proveedor;
+import ar.com.mateo.tpfinal.model.Categoria;
+import ar.com.mateo.tpfinal.model.Marca;
+import ar.com.mateo.tpfinal.ui.*;
+import java.awt.GridLayout;
+
+public class AgregaModifica extends JDialog {
+
+	private static final long serialVersionUID = -9029911367974734603L;
+
+	private final JPanel contentPanel = new JPanel();
+	
+	
+	private EstadoOperacion estadoOperacion;
+	private JTextField txtId;
+	private JTextField txtProducto;
+	private JTextField txtPrecio;
+	private Producto producto;
+	private JComboBox<Marca> cboMarca;
+	private JComboBox<Categoria> cboCategoria;
+    private boolean alta;
+	/**
+	 * Create the dialog.
+	 * 
+	 * @throws PersistenciaException
+	 */
+	public AgregaModifica(Frame parent, EstadoOperacion estadoOperacion, Producto producto,boolean Alta)
+			throws PersistenciaException {
+		super(parent, true);
+		this.estadoOperacion = estadoOperacion;
+		this.producto = producto;
+		setBounds(100, 100, 739, 682);
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{728, 0};
+		gridBagLayout.rowHeights = new int[]{638, 0, 35, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		getContentPane().setLayout(gridBagLayout);
+		NuevoP jn= new NuevoP();
+		GridBagConstraints gbc_jn = new GridBagConstraints();
+		gbc_jn.insets = new Insets(0, 0, 5, 0);
+		gbc_jn.gridx = 0;
+		gbc_jn.gridy = 0;
+		this.getContentPane().add(jn, gbc_jn);
+		jn.setVisible(false);
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		GridBagConstraints gbc_contentPanel = new GridBagConstraints();
+		gbc_contentPanel.anchor = GridBagConstraints.NORTHWEST;
+		gbc_contentPanel.insets = new Insets(0, 0, 5, 0);
+		gbc_contentPanel.gridx = 0;
+		gbc_contentPanel.gridy = 0;
+		getContentPane().add(contentPanel, gbc_contentPanel);
+		contentPanel.setLayout(new GridLayout(0, 2, 0, 0));
+		{
+			JLabel lblNewLabel = new JLabel("ID");
+			contentPanel.add(lblNewLabel);
+		}
+		{
+			txtId = new JTextField();
+			contentPanel.add(txtId);
+			txtId.setColumns(3);
+		}
+		{
+			JLabel lblDescripcin = new JLabel("Descripción");
+			contentPanel.add(lblDescripcin);
+		}
+		{
+			txtProducto = new JTextField();
+			contentPanel.add(txtProducto);
+			txtProducto.setColumns(10);
+		}
+		{
+			JLabel lblPrecio = new JLabel("Precio");
+			contentPanel.add(lblPrecio);
+		}
+		{
+			txtPrecio = new JTextField();
+			contentPanel.add(txtPrecio);
+			txtPrecio.setColumns(10);
+		}
+		{
+			JLabel lblRubro = new JLabel("Categoria");
+			contentPanel.add(lblRubro);
+		}
+		{
+			cboCategoria = new JComboBox<Categoria>();
+			contentPanel.add(cboCategoria);
+		}
+		{
+			JLabel lblProveedor = new JLabel("Marca");
+			contentPanel.add(lblProveedor);
+		}
+		{
+			cboMarca = new JComboBox<Marca>();
+			contentPanel.add(cboMarca);
+		}
+		{
+			{
+			}
+			JPanel buttonPane = new JPanel();
+			GridBagConstraints gbc_buttonPane = new GridBagConstraints();
+			gbc_buttonPane.insets = new Insets(0, 0, 5, 0);
+			gbc_buttonPane.anchor = GridBagConstraints.NORTH;
+			gbc_buttonPane.fill = GridBagConstraints.HORIZONTAL;
+			gbc_buttonPane.gridx = 0;
+			gbc_buttonPane.gridy = 1;
+			getContentPane().add(buttonPane, gbc_buttonPane);
+			{
+				GridBagLayout gbl_buttonPane = new GridBagLayout();
+				gbl_buttonPane.columnWidths = new int[]{454, 124, 54, 81, 0};
+				gbl_buttonPane.rowHeights = new int[]{25, 0};
+				gbl_buttonPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+				gbl_buttonPane.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+				buttonPane.setLayout(gbl_buttonPane);
+				{
+					JButton cancelButton = new JButton("Cancel");
+					cancelButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							dispose();
+							
+						}
+					});
+					JButton okButton = new JButton("OK");
+					okButton.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+								try {
+									altaModifica(Alta);
+									dispose();
+								} catch (PersistenciaException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								
+							
+						}
+					});
+					okButton.setActionCommand("OK");
+					GridBagConstraints gbc_okButton = new GridBagConstraints();
+					gbc_okButton.anchor = GridBagConstraints.NORTHWEST;
+					gbc_okButton.insets = new Insets(0, 0, 0, 5);
+					gbc_okButton.gridx = 2;
+					gbc_okButton.gridy = 0;
+					buttonPane.add(okButton, gbc_okButton);
+					getRootPane().setDefaultButton(okButton);
+					cancelButton.setActionCommand("Cancel");
+					GridBagConstraints gbc_cancelButton = new GridBagConstraints();
+					gbc_cancelButton.anchor = GridBagConstraints.NORTHWEST;
+					gbc_cancelButton.gridx = 3;
+					gbc_cancelButton.gridy = 0;
+					buttonPane.add(cancelButton, gbc_cancelButton);
+				}
+			}
+			init();
+		}
+	}	
+	private void init() throws PersistenciaException {
+		// Llenar combos
+		CategoriaDAO rDAO = new CategoriaDAO();
+		MarcaDAO pDAO = new MarcaDAO();
+		List<Categoria> rubros = rDAO.list();
+		cboCategoria.setModel(new DefaultComboBoxModel<Categoria>(rubros.toArray(new Categoria[rubros.size()])));
+		List<Marca> marca = pDAO.list();
+		cboMarca.setModel(new DefaultComboBoxModel<Marca>(marca.toArray(new Marca[marca.size()])));
+
+		// Determinar si es agregar o editar
+		if (producto == null) {
+			setTitle("Nuevo producto");
+		} else {
+			setTitle("Edita producto");
+			txtId.setText(producto.getIdProducto() + "");
+			txtProducto.setText(producto.getProducto());
+			txtPrecio.setText(producto.getPrecio() + "");
+			txtId.setEnabled(false);
+			cboCategoria.setSelectedItem(producto.getCategoria());
+			cboMarca.setSelectedItem(producto.getMarca());
+		}
+
+	}
+
+	private void altaModifica(boolean Alta) throws PersistenciaException {
+		CategoriaDAO rDAO = new CategoriaDAO();
+		MarcaDAO pDAO = new MarcaDAO();
+		ProductoDAO dao = new ProductoDAO();
+
+		List<Categoria> rubros = rDAO.list();
+		List<Marca> marca = pDAO.list();
+		try {
+			if (Alta) {
+
+				Categoria cat = rubros.get(cboCategoria.getSelectedIndex());
+				Marca mar = marca.get(cboMarca.getSelectedIndex());
+				Producto pr2 = new Producto(Integer.parseInt(txtId.getText()), txtProducto.getText(),
+						Double.parseDouble(txtPrecio.getText()), cat, mar);
+				dao.insert(pr2);
+				return;
+			}
+
+			else {
+
+				Categoria cat = rubros.get(cboCategoria.getSelectedIndex());
+				Marca mar = marca.get(cboMarca.getSelectedIndex());
+				Producto pr2 = new Producto(txtProducto.getText(), Double.parseDouble(txtPrecio.getText()), cat,
+						mar);
+				dao.update(pr2);
+				return;
+			}
+		} catch (
+
+		PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Error de persistensia.", "Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+			return;
+		}
+	}
+
+	private void ejecutaOperacion(boolean isAlta) {
+
+		ProductoDAO dao = new ProductoDAO();
+		try {
+			if (isAlta) {
+				dao.insert(producto);
+			} else {
+				dao.update(producto);
+			}
+			estadoOperacion.refrescar();
+			dispose();
+		} catch (PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Problemas almacenando el producto.\n" + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+}
+

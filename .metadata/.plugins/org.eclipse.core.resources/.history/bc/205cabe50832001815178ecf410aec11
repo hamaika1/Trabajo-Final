@@ -1,0 +1,71 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.util.List;
+
+import javax.swing.event.TableModelListener;
+
+import ar.com.mateo.tpfinal.model.Local;
+import ar.com.mateo.tpfinal.model.Producto;
+
+public class ModeloTablaLocales {
+	private List<Local> lista;
+	private String[] titulos="ID,Local".split(",");
+	@SuppressWarnings("rawtypes")
+	private Class[] tipos=new Class[]{Integer.class,String.class};
+	;
+		public ModeloTablaLocales(List<Local> lista) {
+			super();
+			this.lista = lista;
+		}
+
+		public List<Local> getLista() {
+			return lista;
+		}
+		public void setLista(List<Local> lista) {
+			this.lista = lista;
+		}
+
+		public int getRowCount() {
+			return lista.size();
+		}
+
+		public int getColumnCount() {
+			return titulos.length;
+		}
+
+		public String getColumnName(int columnIndex) {
+			
+			return titulos[columnIndex];
+		}
+
+		public Class<?> getColumnClass(int columnIndex) {
+			return tipos[columnIndex];
+		}
+
+		public boolean isCellEditable(int rowIndex, int columnIndex) {
+			return false;
+		}
+
+		public Object getValueAt(int rowIndex, int columnIndex) {
+			if(columnIndex==0) {
+				return lista.get(rowIndex).getIdLocal();
+			} else if (columnIndex==1) {
+				return lista.get(rowIndex).getLocal();
+			} else {
+				return null;
+			}
+		}
+
+		public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+		}
+
+		public void addTableModelListener(TableModelListener l) {
+		}
+
+		public void removeTableModelListener(TableModelListener l) {
+
+		}
+	}
+	
+
+

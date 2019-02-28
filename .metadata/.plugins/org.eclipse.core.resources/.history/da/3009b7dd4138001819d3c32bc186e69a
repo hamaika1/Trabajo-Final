@@ -1,0 +1,123 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+
+
+import javax.swing.JOptionPane;
+
+import java.awt.GridBagLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
+
+import ar.com.mateo.tpfinal.jdbc.ClienteDAO;
+import ar.com.mateo.tpfinal.jdbc.PersistenciaException;
+import ar.com.mateo.tpfinal.model.Cliente;
+import ar.com.mateo.tpfinal.model.Producto;
+import ar.com.mateo.tpfinal.ui.*;
+
+import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Clientes extends JFrame {
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Clientes frame = new Clientes();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Clientes() {
+		setBounds(100, 100, 466, 317);
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		getContentPane().setLayout(gridBagLayout);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridwidth = 9;
+		gbc_scrollPane.gridheight = 8;
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 0;
+		gbc_scrollPane.gridy = 1;
+		getContentPane().add(scrollPane, gbc_scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setFont(new Font("NanumMyeongjo", Font.BOLD, 12));
+		table.setBorder(UIManager.getBorder("FormattedTextField.border"));
+		table.setForeground(new Color(0, 0, 0));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		
+		JPanel panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridwidth = 9;
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 9;
+		getContentPane().add(panel, gbc_panel);
+		
+		JButton btnNuevoCliente = new JButton("Nuevo Cliente");
+		btnNuevoCliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		panel.add(btnNuevoCliente);
+		
+		JButton btnModificacliente = new JButton("ModificaCliente");
+		btnModificacliente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		panel.add(btnModificacliente);
+
+	}
+	ClienteDAO dao = new ClienteDAO();
+	private JTable table;
+	public void refrescar() {
+		try {
+			table.setModel(new ModeloTablaCliente(dao.list()));
+		} catch (PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Problemas cargando productos.\n" + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+	private void modificar() {
+		if (table.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un producto", "Error",
+					JOptionPane.INFORMATION_MESSAGE);
+			return;
+
+	}
+	}
+
+}

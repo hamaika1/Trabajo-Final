@@ -1,0 +1,17 @@
+package ar.com.mateo.Practico5;
+
+public class PruebaEmpleado {
+
+	public static void main(String[] args) {
+		
+		Empleado e1=new Empleado();
+		e1.setNombre("Manolo");
+		e1.setDni("32044567");
+		e1.setEdad(48);
+		e1.setCasado(true);
+		e1.setSalario(20000);
+		e1.aumentaSalario(4355);
+		System.out.println(e1.toString());
+	}
+
+}

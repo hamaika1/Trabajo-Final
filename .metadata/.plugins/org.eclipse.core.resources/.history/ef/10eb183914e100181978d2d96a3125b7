@@ -1,0 +1,140 @@
+package ar.com.mateo.PracticoFinal.UI;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import ar.com.mateo.PracticoFinal.BO.ControlesBO;
+import ar.com.mateo.PracticoFinal.Exceptions.ValidarCamposException;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class AgregraNotaParcial extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField textNmbAlumno;
+	private JTextField textParcial1;
+	private JTextField textParcial2;
+	private JTextField textMateria;
+
+	/**
+	 * Create the frame.
+	 */
+	public AgregraNotaParcial() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JPanel panelMenu = new JPanel();
+		panelMenu.setBounds(0, 22, 438, 201);
+		contentPane.add(panelMenu);
+		panelMenu.setLayout(null);
+
+		JLabel lblNombreAlumno = new JLabel("Nombre Alumno:");
+		lblNombreAlumno.setBounds(12, 12, 125, 15);
+		panelMenu.add(lblNombreAlumno);
+
+		JLabel lblParcial1 = new JLabel("Parcial 1:");
+		lblParcial1.setBounds(12, 66, 91, 15);
+		panelMenu.add(lblParcial1);
+
+		JLabel lblParcial2 = new JLabel("Parcial 2:");
+		lblParcial2.setBounds(217, 66, 91, 15);
+		panelMenu.add(lblParcial2);
+
+		JLabel lblMateria = new JLabel("Materia: ");
+		lblMateria.setBounds(12, 119, 70, 15);
+		panelMenu.add(lblMateria);
+
+		textNmbAlumno = new JTextField();
+		textNmbAlumno.setBounds(147, 10, 218, 19);
+		panelMenu.add(textNmbAlumno);
+		textNmbAlumno.setColumns(10);
+
+		textParcial1 = new JTextField();
+		textParcial1.setBounds(85, 64, 114, 19);
+		panelMenu.add(textParcial1);
+		textParcial1.setColumns(10);
+
+		textParcial2 = new JTextField();
+		textParcial2.setBounds(287, 64, 125, 19);
+		panelMenu.add(textParcial2);
+		textParcial2.setColumns(10);
+
+		textMateria = new JTextField();
+		textMateria.setBounds(85, 117, 191, 19);
+		panelMenu.add(textMateria);
+		textMateria.setColumns(10);
+
+		JPanel panelBotones = new JPanel();
+		panelBotones.setBounds(0, 226, 450, 74);
+		contentPane.add(panelBotones);
+		panelBotones.setLayout(null);
+
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VentanaPrincipal.panelGeneral.removeAll();
+				VentanaPrincipal.panelGeneral.repaint();
+				VentanaPrincipal.panelGeneral.revalidate();
+				VentanaPrincipal.actualizar(VentanaPrincipal.panelParcial);
+				dispose();
+			}
+		});
+		btnCancelar.setBounds(181, 0, 117, 25);
+		panelBotones.add(btnCancelar);
+
+		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Boolean error = false;
+
+				try {
+					ControlesBO.validarCampoObligatorio((String) textNmbAlumno.getText());
+					ControlesBO.validarCampoObligatorio((String) textParcial1.getText());
+					ControlesBO.validarCampoObligatorio((String) textParcial2.getText());
+					ControlesBO.validarCampoObligatorio((String) textMateria.getText());
+
+				} catch (ValidarCamposException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Error ", JOptionPane.ERROR_MESSAGE);
+					error = true;
+				}
+
+				if (error == false) {
+
+					materia.setNombre(textNombre.getText());
+					materia.setHorario(textHorario.getText());
+
+					if (updateMateria) {
+						System.out.println(materia.getId());
+						mBO.update(materia);
+					} else {
+						mBO.save(materia);
+					}
+
+					VentanaPrincipal.panelMaterias = new PanelMateriasUI();
+					VentanaPrincipal.panelGeneral.removeAll();
+					VentanaPrincipal.panelGeneral.repaint();
+					VentanaPrincipal.panelGeneral.revalidate();
+					VentanaPrincipal.actualizar(VentanaPrincipal.panelMaterias);
+
+					dispose();
+				}
+			}
+		});
+		btnGuardar.setBounds(310, 0, 117, 25);
+		panelBotones.add(btnGuardar);
+
+		JLabel lblNotasParcial = new JLabel("Notas Parcial");
+		lblNotasParcial.setBounds(158, 0, 140, 15);
+		contentPane.add(lblNotasParcial);
+	}
+}

@@ -1,0 +1,90 @@
+package ar.com.mateo.tpfinal.jdbc;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import ar.com.mateo.tpfinal.model.Local;
+import ar.com.mateo.tpfinal.model.Producto;
+import ar.com.mateo.tpfinal.model.ProductosPorLocal;
+
+public class LocalesDAO implements GenericDAO<Local, Integer> {
+	
+
+	@Override
+	public List<Local> list() throws PersistenciaException {
+		List<Local> r=new ArrayList<Local>();
+		try {
+			ResultSet rs=Util.createStatement().executeQuery("SELECT * FROM Local ORDER BY Local");
+			while(rs.next()) {
+				r.add(new Local(rs.getInt("idLocales"),rs.getString("local")));
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new PersistenciaException(e.getMessage(),e);
+		}
+		return r;
+	}
+
+	@Override
+	public Local insert(Local entidad) throws PersistenciaException {
+		try{
+			PreparedStatement ps = Util.prepareStatement(
+					"INSERT INTO Local (idLocales,local) VALUES (?,?)");
+					ps.setInt(1, entidad.getidLocales());
+					ps.setString(2, entidad.getlocal());
+					ps.execute();
+					
+			        
+			} catch (ClassNotFoundException | SQLException e) {
+				throw new PersistenciaException(e.getMessage(), e);
+			}
+			return entidad;
+		}
+	
+
+	@Override
+	public Local update(Local entidad) throws PersistenciaException {
+		try{
+			PreparedStatement ps = Util.prepareStatement(
+					"UPDATE Local SET local=? WHERE idLocales=?");
+			
+			       
+					ps.setInt(2,entidad.getidLocales());
+					ps.setString(1,entidad.getlocal());
+					
+					
+					ps.execute();
+			        
+			} catch (ClassNotFoundException | SQLException e) {
+				throw new PersistenciaException(e.getMessage(), e);
+			}
+			return entidad;
+	}
+
+	@Override
+	public void delete(Local entidad) throws PersistenciaException {
+		try {
+			PreparedStatement ps = Util.prepareStatement("DELETE FROM Local WHERE idLocal=? ");
+			ps.setInt(1, entidad.getidLocales());
+			ps.execute();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	@Override
+	public Local load(Integer id) throws PersistenciaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	}
+

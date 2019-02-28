@@ -1,0 +1,40 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.util.List;
+
+import javax.swing.ListModel;
+import javax.swing.event.ListDataListener;
+
+
+import ar.com.mateo.tpfinal.model.Proveedor;
+
+public class ModeloListaProveedores implements ListModel<Proveedor> {
+
+	private List<Proveedor> pr;
+	
+	@Override
+	public void addListDataListener(ListDataListener l) {
+		
+		
+	}
+
+	@Override
+	public Proveedor getElementAt(int index) {
+		
+		return null;
+	}
+
+	@Override
+	public int getSize() {
+		return pr.size();
+	}
+
+	@Override
+	public void removeListDataListener(ListDataListener l) {
+		
+		
+	}
+
+	
+
+}

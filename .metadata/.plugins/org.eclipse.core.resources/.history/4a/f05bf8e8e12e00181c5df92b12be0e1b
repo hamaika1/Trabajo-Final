@@ -1,0 +1,14 @@
+package ar.com.mateo.tpfinal.ui;
+
+import javax.swing.JPanel;
+
+public class NuevoP extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public NuevoP() {
+
+	}
+
+}

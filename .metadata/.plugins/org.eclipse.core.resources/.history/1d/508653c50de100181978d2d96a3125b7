@@ -1,0 +1,95 @@
+package ar.com.mateo.PracticoFinal.UI;
+
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
+
+public class VentanaPrincipal extends JFrame {
+
+	static JPanel panelGeneral;
+	static PanelAlumnoUI panelAlumnos;
+	static PanelMateriasUI panelMaterias;
+
+	/**
+	 * Create the frame.
+	 */
+	public VentanaPrincipal() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setSize(1169, 703);
+		setLocationRelativeTo(null);
+		setBackground(new Color(0, 139, 139));
+		setFont(new Font("Bradley HandITC", Font.BOLD, 14));
+		setTitle("Software Alumnos");
+		getContentPane().setLayout(null);
+		
+		panelGeneral = new JPanel();
+		panelGeneral.setBounds(16, 83, 1121, 578);
+		panelGeneral.setLayout(null);
+		panelGeneral.setBackground(new Color(102, 102, 102));
+		getContentPane().add(panelGeneral);
+
+		JPanel panelMenu = new JPanel();
+		panelMenu.setBounds(6, 17, 1157, 65);
+		getContentPane().add(panelMenu);
+		panelMenu.setLayout(null);
+
+		JButton btnAlumnos = new JButton("Alumnos");
+		btnAlumnos.setFont(new Font("Copperplate Gothic Light", Font.BOLD, 18));
+		btnAlumnos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				panelAlumnos = new PanelAlumnoUI();
+				actualizar(panelAlumnos);
+
+			}
+		});
+		btnAlumnos.setBounds(49, 6, 159, 25);
+		panelMenu.add(btnAlumnos);
+
+		JButton btnMaterias = new JButton("Materias");
+		btnMaterias.setFont(new Font("Copperplate Gothic Light", Font.BOLD, 18));
+		btnMaterias.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMaterias = new PanelMateriasUI();
+				actualizar(panelMaterias);
+
+			}
+		});
+		btnMaterias.setBounds(325, 6, 178, 25);
+		panelMenu.add(btnMaterias);
+
+		JButton btnParciales = new JButton("Parciales");
+		btnParciales.setFont(new Font("Copperplate Gothic Light", Font.BOLD, 18));
+		btnParciales.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		btnParciales.setBounds(619, 6, 172, 25);
+		panelMenu.add(btnParciales);
+
+	
+		JButton btnHome = new JButton("HOME");
+		btnHome.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnHome.setIcon(new ImageIcon(
+				"/home/mateo/workspaces/workspaceFinal/Final-JAVA/src/ar/com/mateo/PracticoFinal/Image/kisspng-computer-icons-home-house-home-5ace88fc2001a1.3041062815234849241311.jpg"));
+		btnHome.setBounds(972, 7, 117, 25);
+		panelMenu.add(btnHome);
+		
+		
+	}
+	public static void actualizar(JPanel panel) {
+		panelGeneral.removeAll();
+		panelGeneral.add(panel);
+		panelGeneral.updateUI();
+	}
+}

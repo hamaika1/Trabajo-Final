@@ -1,0 +1,79 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.util.List;
+
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+
+import ar.com.mateo.tpfinal.model.Cliente;
+
+public class ModeloTablaCliente implements TableModel {
+	private List<Cliente> lista;
+	private String[] titulos = "ID,Nombre,Apellido,Direccion,Telefono,DNI".split(",");
+	@SuppressWarnings("rawtypes")
+	private Class[] tipos = new Class[] { Integer.class, String.class, String.class, String.class, String.class,
+			String.class };;
+
+	public ModeloTablaCliente(List<Cliente> lista, String[] titulos, Class[] tipos) {
+		super();
+		this.lista = lista;
+		this.titulos = titulos;
+		this.tipos = tipos;
+	}
+
+	public List<Cliente> getLista() {
+		return lista;
+	}
+	
+	public void setLista(List<Cliente> lista) {
+		this.lista = lista;
+	}
+	@Override
+	public int getRowCount(){
+		return lista.size();
+	}
+	@Override
+	public int getColumnCount(){
+		return titulos.length;
+	}
+	@Override
+	public String getColumnName(int columnIndex){
+		return titulos[columnIndex];
+	}
+	@Override
+	public Class<?> getColumnClass(int columnIndex){
+		return tipos[columnIndex];
+	}
+	@Override
+	public boolean isCellEditable(int rowIndex, int columnIndex) {
+		return false;
+	}
+	@Override
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		if (columnIndex == 0) {
+			return lista.get(rowIndex).getIdCliente();
+		} else if (columnIndex == 1) {
+			return lista.get(rowIndex).getNombre();
+		} else if (columnIndex == 2) {
+			return lista.get(rowIndex).getApellido();
+		} else if (columnIndex == 3) {
+			return lista.get(rowIndex).getDireccion();
+		} else if (columnIndex == 4) {
+			return lista.get(rowIndex).getTelefono();
+		} else if (columnIndex == 5) {
+			return lista.get(rowIndex).getDNI();
+		} else {
+			return null;
+		}
+	}
+	@Override
+	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+	}
+	@Override
+	public void addTableModelListener(TableModelListener l) {
+	}
+	@Override
+	public void removeTableModelListener(TableModelListener l) {
+
+	}
+}

@@ -1,0 +1,241 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+
+import ar.com.mateo.tpfinal.jdbc.*;
+import ar.com.mateo.tpfinal.model.*;
+import javax.swing.JComboBox;
+import javax.swing.UIManager;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.Window.Type;
+import java.awt.Canvas;
+import javax.swing.JLabel;
+
+public class VentanaPrincipal extends JFrame implements EstadoOperacion {
+
+	private static final long serialVersionUID = 3447259289502600218L;
+	
+	private JPanel contentPane;
+	private JTable table;
+	private JComboBox<Categoria> cboCategoria;
+
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaPrincipal frame = new VentanaPrincipal();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public VentanaPrincipal() {
+		setTitle("Bienvenidos al Software");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 729, 457);
+		contentPane = new JPanel();
+		contentPane.setBorder(UIManager.getBorder("Tree.editorBorder"));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		JPanel panelBotones = new JPanel();
+		panelBotones.setBounds(1, 421, 727, 35);
+		FlowLayout fl_panelBotones = (FlowLayout) panelBotones.getLayout();
+		fl_panelBotones.setAlignment(FlowLayout.RIGHT);
+		contentPane.add(panelBotones);
+		
+		JButton btnRefrescaLista = new JButton("Refresca Lista");
+		btnRefrescaLista.setForeground(SystemColor.activeCaptionText);
+		btnRefrescaLista.setFont(new Font("DejaVu Sans", Font.BOLD, 12));
+		btnRefrescaLista.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				refrescar();
+			}
+		});
+		btnRefrescaLista.setBackground(UIManager.getColor("Button.shadow"));
+		panelBotones.add(btnRefrescaLista);
+
+		JButton btnNuevo = new JButton("Nuevo");
+		btnNuevo.setForeground(SystemColor.activeCaptionText);
+		btnNuevo.setFont(new Font("DejaVu Sans", Font.BOLD, 12));
+		btnNuevo.setBackground(UIManager.getColor("Button.shadow"));
+		panelBotones.add(btnNuevo);
+
+		JButton btnModifica = new JButton("Modifica");
+		btnModifica.setForeground(SystemColor.activeCaptionText);
+		btnModifica.setBackground(UIManager.getColor("Button.focus"));
+		btnModifica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modificar();
+
+			}
+		});
+		panelBotones.add(btnModifica);
+
+		JButton btnElimina = new JButton("Eliminar");
+		btnElimina.setBackground(UIManager.getColor("OptionPane.errorDialog.border.background"));
+		btnElimina.setForeground(Color.BLACK);
+		btnElimina.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				eliminar();
+			}
+		});
+		panelBotones.add(btnElimina);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(1, 55, 727, 321);
+		contentPane.add(scrollPane);
+
+		table = new JTable();
+		table.setFont(new Font("NanumMyeongjo", Font.BOLD, 12));
+		table.setBorder(UIManager.getBorder("FormattedTextField.border"));
+		table.setForeground(new Color(0, 0, 0));
+		scrollPane.setViewportView(table);
+
+		btnNuevo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				agregar();
+
+			}
+		});
+
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		
+		
+
+		
+		cboCategoria.setBounds(1, 20, 727, 24);
+		cboCategoria.setFont(new Font("DejaVu Sans", Font.BOLD, 12));
+		cboCategoria.setForeground(new Color(0, 0, 0));
+		cboCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+			
+				
+			}
+			
+		});
+		contentPane.add(cboCategoria);
+		
+		table2 = new JTable();
+		table2.setBounds(1, 25, 0, 396);
+		contentPane.add(table2);
+		
+		JLabel lblNewLabel = new JLabel("T U   N E G O C I O  :)");
+		lblNewLabel.setForeground(new Color(25, 25, 112));
+		lblNewLabel.setFont(new Font("Sawasdee", Font.BOLD | Font.ITALIC, 15));
+		lblNewLabel.setBounds(48, 358, 274, 35);
+		contentPane.add(lblNewLabel);
+		refrescar();
+	}
+	/**private void llenaCombo(){
+		Vector<String> listas = new Vector<String>();
+		listas.add("Proveedores");
+		listas.add("Productos");
+		
+		cboCategoria(listas);
+		
+	}**/
+
+	private void agregar() {
+		try {
+			AgregaModifica dialog = new AgregaModifica(this, this, null,true);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			refrescar();
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(this, "Problemas cargando formulario de nuevo producto.\n" + e1.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void eliminar() {
+		if (table.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un producto", "Error",
+					JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		Producto p = ((ModeloTablaProductos) table.getModel()).getLista().get(table.getSelectedRow());
+		if (JOptionPane.showConfirmDialog(this, "Está segur@ que desea eliminar el producto '" + p.getProducto() + "'?",
+				"Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+			try {
+				dao.delete(p);
+				refrescar();
+			} catch (PersistenciaException e) {
+				JOptionPane.showMessageDialog(this, "Problemas eliminando producto.\n"+e.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
+	private void modificar() {
+		if (table.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un producto", "Error",
+					JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		Producto p = ((ModeloTablaProductos) table.getModel()).getLista().get(table.getSelectedRow());
+		AgregaModifica dialog;
+		try {
+			dialog = new AgregaModifica(this, this, p,false);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			refrescar();
+		} catch (PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Problemas cargando formulario de edición.\n" + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+
+	private ProductoDAO dao = new ProductoDAO();
+	private JTable table2;
+
+	@Override
+	public void refrescar() {
+		try {
+			table.setModel(new ModeloTablaProductos(dao.list()));
+		} catch (PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Problemas cargando productos.\n" + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+}

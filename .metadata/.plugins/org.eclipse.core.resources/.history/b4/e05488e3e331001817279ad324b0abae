@@ -1,0 +1,154 @@
+package ar.com.mateo.tpfinal.ui;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import javax.swing.JLabel;
+
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.util.Vector;
+import java.awt.event.ActionEvent;
+
+public class NuevoP extends JPanel {
+	 JList<String> list1;
+	 JList<String> list;
+	 Vector<String>Proveedor1;
+	 Vector<String>Proveedor2;
+	/**
+	 * Create the panel.
+	 */
+	public NuevoP() {
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gridBagLayout.columnWeights = new double[]{1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		setLayout(gridBagLayout);
+		
+		JLabel lblProducto = new JLabel("Producto");
+		GridBagConstraints gbc_lblProducto = new GridBagConstraints();
+		gbc_lblProducto.insets = new Insets(0, 0, 5, 5);
+		gbc_lblProducto.gridx = 8;
+		gbc_lblProducto.gridy = 0;
+		add(lblProducto, gbc_lblProducto);
+		
+		JLabel lblProveedores = new JLabel("Proveedores");
+		GridBagConstraints gbc_lblProveedores = new GridBagConstraints();
+		gbc_lblProveedores.insets = new Insets(0, 0, 5, 5);
+		gbc_lblProveedores.gridx = 14;
+		gbc_lblProveedores.gridy = 0;
+		add(lblProveedores, gbc_lblProveedores);
+		
+		JPanel panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridheight = 9;
+		gbc_panel.gridwidth = 10;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 6;
+		gbc_panel.gridy = 2;
+		add(panel, gbc_panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_panel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_panel.columnWeights = new double[]{1.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
+		
+		JList<String> list = new JList<String>();
+		GridBagConstraints gbc_list = new GridBagConstraints();
+		gbc_list.gridheight = 7;
+		gbc_list.insets = new Insets(0, 0, 0, 5);
+		gbc_list.fill = GridBagConstraints.BOTH;
+		gbc_list.gridx = 0;
+		gbc_list.gridy = 0;
+		panel.add(list, gbc_list);
+		
+		JList<String> list1 = new JList<String>();
+		GridBagConstraints gbc_list_1 = new GridBagConstraints();
+		gbc_list_1.gridheight = 7;
+		gbc_list_1.fill = GridBagConstraints.BOTH;
+		gbc_list_1.gridx = 2;
+		gbc_list_1.gridy = 0;
+		panel.add(list1, gbc_list_1);
+		list1.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		list1.setLayoutOrientation(JList.VERTICAL_WRAP);
+		list1.setVisibleRowCount(-1);
+		Proveedor1= new Vector<String>();
+		Proveedor2= new Vector<String>();
+		cargarProveedor();
+		list1.setVisible(true);
+		
+		
+		JButton button = new JButton("<<");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 int i=list1.getSelectedIndex();
+				list.removeAll();
+				Proveedor2.add(Proveedor1.get(i));
+				list.setListData(Proveedor2);
+				list1.remove(i);				
+								
+			}
+		});
+		GridBagConstraints gbc_button = new GridBagConstraints();
+		gbc_button.insets = new Insets(0, 0, 5, 5);
+		gbc_button.gridx = 1;
+		gbc_button.gridy = 1;
+		panel.add(button, gbc_button);
+		
+		JButton button_1 = new JButton(">");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_button_1 = new GridBagConstraints();
+		gbc_button_1.insets = new Insets(0, 0, 5, 5);
+		gbc_button_1.gridx = 1;
+		gbc_button_1.gridy = 2;
+		panel.add(button_1, gbc_button_1);
+		
+		JButton button_2 = new JButton("<");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_button_2 = new GridBagConstraints();
+		gbc_button_2.insets = new Insets(0, 0, 5, 5);
+		gbc_button_2.gridx = 1;
+		gbc_button_2.gridy = 4;
+		panel.add(button_2, gbc_button_2);
+		
+		JButton button_3 = new JButton(">>");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		GridBagConstraints gbc_button_3 = new GridBagConstraints();
+		gbc_button_3.insets = new Insets(0, 0, 5, 5);
+		gbc_button_3.gridx = 1;
+		gbc_button_3.gridy = 5;
+		panel.add(button_3, gbc_button_3);
+
+	}
+	private void cargarProveedor(){
+		Proveedor1.add("SONY");
+		Proveedor1.add("AMAZON");
+		Proveedor1.add("PANASONIC");
+		Proveedor1.add("MOTOROLA");
+		list1.setListData(Proveedor1);
+		
+	}
+		
+		
+		
+}

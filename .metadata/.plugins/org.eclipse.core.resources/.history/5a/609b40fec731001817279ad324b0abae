@@ -1,0 +1,16 @@
+package ar.com.mateo.tpfinal.ui;
+
+import javax.swing.JPanel;
+import java.awt.GridLayout;
+
+public class NuevoP extends JPanel {
+
+	/**
+	 * Create the panel.
+	 */
+	public NuevoP() {
+		setLayout(new GridLayout(1, 0, 0, 0));
+
+	}
+
+}

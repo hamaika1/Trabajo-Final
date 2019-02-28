@@ -1,0 +1,77 @@
+package ar.com.mateo.tpfinal.jdbc;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import ar.com.mateo.tpfinal.model.Producto;
+import ar.com.mateo.tpfinal.model.ProductosPorLocal;
+import ar.com.mateo.tpfinal.model.Vendedor;
+
+public class VendedorDAO implements GenericDAO<Vendedor, Integer> {
+	
+
+	@Override
+	public List<Vendedor> list() throws PersistenciaException {
+		List<Vendedor> r=new ArrayList<Vendedor>();
+		try {
+			ResultSet rs=Util.createStatement().executeQuery("SELECT * FROM Vendedor ");
+			while(rs.next()) {
+				r.add(new Vendedor(rs.getInt("idVendedor"),rs.getString("vendedor"),rs.getFloat("comision")));
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new PersistenciaException(e.getMessage(),e);
+		}
+		return r;
+	}
+
+	@Override
+	public Vendedor insert(Vendedor entidad) throws PersistenciaException {
+		try{
+			PreparedStatement ps = Util.prepareStatement(
+					"INSERT INTO Vendedor (idVendedor,vendedor,comision) VALUES (?,?,?)");
+					ps.setInt(1,entidad.getIdVendedor());
+					ps.setString(2,entidad.getvendedor());
+					ps.setFloat(3,entidad.getComision());
+					ps.execute();
+			        
+			} catch (ClassNotFoundException | SQLException e) {
+				throw new PersistenciaException(e.getMessage(), e);
+			}
+			return entidad;
+		}
+
+	@Override
+	public Vendedor update(Vendedor entidad) throws PersistenciaException {
+		try{
+		PreparedStatement ps = Util.prepareStatement(
+				"UPDATE Vendedor SET vendedor=?,comision=? WHERE idVendedor=?");
+		
+		       ps.setFloat(1,entidad.getComision());
+				ps.setInt(3,entidad.getIdVendedor());
+				ps.setString(2,entidad.getvendedor());
+				
+				ps.execute();
+		        
+		} catch (ClassNotFoundException | SQLException e) {
+			throw new PersistenciaException(e.getMessage(), e);
+		}
+		return entidad;
+	}
+
+	@Override
+	public void delete(Vendedor entidad) throws PersistenciaException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Vendedor load(Integer id) throws PersistenciaException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

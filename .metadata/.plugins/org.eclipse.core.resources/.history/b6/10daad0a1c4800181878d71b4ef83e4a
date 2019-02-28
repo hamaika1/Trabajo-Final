@@ -1,0 +1,158 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Event;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import ar.com.mateo.tpfinal.ui.*;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+
+import ar.com.mateo.tpfinal.jdbc.*;
+import ar.com.mateo.tpfinal.model.*;
+import javax.swing.JComboBox;
+import javax.swing.UIManager;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.Window.Type;
+import java.awt.Canvas;
+import javax.swing.JLabel;
+import java.awt.GridBagLayout;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.RowSpec;
+
+public class VentanaPrincipal extends JFrame implements EstadoOperacion {
+
+	private static final long serialVersionUID = 3447259289502600218L;
+
+	private JPanel contentPane;
+	public VentanaPrincipal() {
+		setTitle("Bienvenidos al Software");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 511, 395);
+		contentPane = new JPanel();
+		contentPane.setBorder(UIManager.getBorder("Tree.editorBorder"));
+		setContentPane(contentPane);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
+		
+		JButton btnProductos = new JButton("Productos");
+		btnProductos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			Productos.main(null);
+			}
+		});
+		GridBagConstraints gbc_btnProductos = new GridBagConstraints();
+		gbc_btnProductos.insets = new Insets(0, 0, 5, 5);
+		gbc_btnProductos.fill = GridBagConstraints.BOTH;
+		gbc_btnProductos.gridx = 1;
+		gbc_btnProductos.gridy = 1;
+		contentPane.add(btnProductos, gbc_btnProductos);
+		
+		JPanel panel = new JPanel();
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.gridwidth = 5;
+		gbc_panel.gridheight = 9;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridx = 3;
+		gbc_panel.gridy = 1;
+		contentPane.add(panel, gbc_panel);
+		
+		JButton btnProveedores = new JButton("Proveedores");
+		btnProveedores.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			Proveedores.main(null);
+			}
+		});
+		GridBagConstraints gbc_btnProveedores = new GridBagConstraints();
+		gbc_btnProveedores.insets = new Insets(0, 0, 5, 5);
+		gbc_btnProveedores.fill = GridBagConstraints.BOTH;
+		gbc_btnProveedores.gridx = 1;
+		gbc_btnProveedores.gridy = 3;
+		contentPane.add(btnProveedores, gbc_btnProveedores);
+		
+		JButton btnLocales = new JButton("Locales");
+		btnLocales.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			Locales.main(null);
+			}
+		});
+		GridBagConstraints gbc_btnLocales = new GridBagConstraints();
+		gbc_btnLocales.insets = new Insets(0, 0, 5, 5);
+		gbc_btnLocales.fill = GridBagConstraints.BOTH;
+		gbc_btnLocales.gridx = 1;
+		gbc_btnLocales.gridy = 5;
+		contentPane.add(btnLocales, gbc_btnLocales);
+		
+		JButton btnClientes = new JButton("Clientes");
+		btnClientes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			Clientes.main(null);
+			}
+		});
+		GridBagConstraints gbc_btnClientes = new GridBagConstraints();
+		gbc_btnClientes.insets = new Insets(0, 0, 5, 5);
+		gbc_btnClientes.fill = GridBagConstraints.BOTH;
+		gbc_btnClientes.gridx = 1;
+		gbc_btnClientes.gridy = 7;
+		contentPane.add(btnClientes, gbc_btnClientes);
+		
+		JButton btnEmpleados = new JButton("Empleados");
+		btnEmpleados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			Empleados.main(null);
+			}
+		});
+		GridBagConstraints gbc_btnEmpleados = new GridBagConstraints();
+		gbc_btnEmpleados.insets = new Insets(0, 0, 5, 5);
+		gbc_btnEmpleados.fill = GridBagConstraints.BOTH;
+		gbc_btnEmpleados.gridx = 1;
+		gbc_btnEmpleados.gridy = 9;
+		contentPane.add(btnEmpleados, gbc_btnEmpleados);
+		
+		JButton btnSalirDelPrograma = new JButton("Salir del Programa");
+		btnSalirDelPrograma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		GridBagConstraints gbc_btnSalirDelPrograma = new GridBagConstraints();
+		gbc_btnSalirDelPrograma.fill = GridBagConstraints.BOTH;
+		gbc_btnSalirDelPrograma.gridx = 7;
+		gbc_btnSalirDelPrograma.gridy = 11;
+		contentPane.add(btnSalirDelPrograma, gbc_btnSalirDelPrograma);
+
+		
+	}
+
+	@Override
+	public void refrescar() {
+		// TODO Auto-generated method stub
+		
+	}
+}

@@ -1,0 +1,319 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
+
+import ar.com.mateo.tpfinal.jdbc.*;
+import ar.com.mateo.tpfinal.model.*;
+import javax.swing.JComboBox;
+import javax.swing.UIManager;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.Window.Type;
+import java.awt.Canvas;
+import javax.swing.JLabel;
+import java.awt.GridBagLayout;
+
+public class VentanaPrincipal extends JFrame implements EstadoOperacion {
+
+	private static final long serialVersionUID = 3447259289502600218L;
+	
+	private JPanel contentPane;
+	private JTable table;
+	private JComboBox<Categoria> cboCategoria;
+
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaPrincipal frame = new VentanaPrincipal();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public VentanaPrincipal() {
+		setTitle("Bienvenidos al Software");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 758, 476);
+		contentPane = new JPanel();
+		contentPane.setBorder(UIManager.getBorder("Tree.editorBorder"));
+		setContentPane(contentPane);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{1, 46, 680, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 396, 35, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
+				
+				JPanel panel = new JPanel();
+				GridBagConstraints gbc_panel = new GridBagConstraints();
+				gbc_panel.gridheight = 2;
+				gbc_panel.gridwidth = 2;
+				gbc_panel.insets = new Insets(0, 0, 5, 0);
+				gbc_panel.fill = GridBagConstraints.BOTH;
+				gbc_panel.gridx = 1;
+				gbc_panel.gridy = 0;
+				contentPane.add(panel, gbc_panel);
+				GridBagLayout gbl_panel = new GridBagLayout();
+				gbl_panel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+				gbl_panel.rowHeights = new int[]{0, 0};
+				gbl_panel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+				gbl_panel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+				panel.setLayout(gbl_panel);
+				
+				JButton btnProductos = new JButton("Productos");
+				GridBagConstraints gbc_btnProductos = new GridBagConstraints();
+				gbc_btnProductos.insets = new Insets(0, 0, 0, 5);
+				gbc_btnProductos.gridx = 1;
+				gbc_btnProductos.gridy = 0;
+				panel.add(btnProductos, gbc_btnProductos);
+				
+				JButton btnProveedores = new JButton("Proveedores");
+				GridBagConstraints gbc_btnProveedores = new GridBagConstraints();
+				gbc_btnProveedores.insets = new Insets(0, 0, 0, 5);
+				gbc_btnProveedores.gridx = 3;
+				gbc_btnProveedores.gridy = 0;
+				panel.add(btnProveedores, gbc_btnProveedores);
+				
+				JButton btnLocales = new JButton("Locales");
+				GridBagConstraints gbc_btnLocales = new GridBagConstraints();
+				gbc_btnLocales.insets = new Insets(0, 0, 0, 5);
+				gbc_btnLocales.gridx = 5;
+				gbc_btnLocales.gridy = 0;
+				panel.add(btnLocales, gbc_btnLocales);
+				
+				JButton btnClientes = new JButton("Clientes");
+				GridBagConstraints gbc_btnClientes = new GridBagConstraints();
+				gbc_btnClientes.insets = new Insets(0, 0, 0, 5);
+				gbc_btnClientes.gridx = 7;
+				gbc_btnClientes.gridy = 0;
+				panel.add(btnClientes, gbc_btnClientes);
+				
+				JButton btnEmpleados = new JButton("Empleados");
+				GridBagConstraints gbc_btnEmpleados = new GridBagConstraints();
+				gbc_btnEmpleados.gridx = 9;
+				gbc_btnEmpleados.gridy = 0;
+				panel.add(btnEmpleados, gbc_btnEmpleados);
+		
+				JScrollPane scrollPane = new JScrollPane();
+				GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+				gbc_scrollPane.fill = GridBagConstraints.BOTH;
+				gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
+				gbc_scrollPane.gridwidth = 3;
+				gbc_scrollPane.gridx = 0;
+				gbc_scrollPane.gridy = 2;
+				contentPane.add(scrollPane, gbc_scrollPane);
+				
+						table = new JTable();
+						table.setFont(new Font("NanumMyeongjo", Font.BOLD, 12));
+						table.setBorder(UIManager.getBorder("FormattedTextField.border"));
+						table.setForeground(new Color(0, 0, 0));
+						scrollPane.setViewportView(table);
+						
+								table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		
+		
+
+		
+		cboCategoria.setBounds(1, 20, 727, 24);
+		cboCategoria.setFont(new Font("DejaVu Sans", Font.BOLD, 12));
+		cboCategoria.setForeground(new Color(0, 0, 0));
+		cboCategoria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+			
+				
+			}
+			
+		});
+		contentPane.add(cboCategoria);
+		
+				JPanel panelBotones = new JPanel();
+				GridBagConstraints gbc_panelBotones = new GridBagConstraints();
+				gbc_panelBotones.anchor = GridBagConstraints.NORTH;
+				gbc_panelBotones.fill = GridBagConstraints.HORIZONTAL;
+				gbc_panelBotones.gridwidth = 3;
+				gbc_panelBotones.gridx = 0;
+				gbc_panelBotones.gridy = 3;
+				contentPane.add(panelBotones, gbc_panelBotones);
+				GridBagLayout gbl_panelBotones = new GridBagLayout();
+				gbl_panelBotones.columnWidths = new int[]{314, 135, 78, 93, 90, 0};
+				gbl_panelBotones.rowHeights = new int[]{25, 0};
+				gbl_panelBotones.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+				gbl_panelBotones.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+				panelBotones.setLayout(gbl_panelBotones);
+						
+						JButton btnRefrescaLista = new JButton("Refresca Lista");
+						btnRefrescaLista.setForeground(SystemColor.activeCaptionText);
+						btnRefrescaLista.setFont(new Font("DejaVu Sans", Font.BOLD, 12));
+						btnRefrescaLista.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								refrescar();
+							}
+						});
+						btnRefrescaLista.setBackground(UIManager.getColor("Button.shadow"));
+						GridBagConstraints gbc_btnRefrescaLista = new GridBagConstraints();
+						gbc_btnRefrescaLista.anchor = GridBagConstraints.NORTHWEST;
+						gbc_btnRefrescaLista.insets = new Insets(0, 0, 0, 5);
+						gbc_btnRefrescaLista.gridx = 1;
+						gbc_btnRefrescaLista.gridy = 0;
+						panelBotones.add(btnRefrescaLista, gbc_btnRefrescaLista);
+						
+								JButton btnModifica = new JButton("Modifica");
+								btnModifica.setForeground(SystemColor.activeCaptionText);
+								btnModifica.setBackground(UIManager.getColor("Button.focus"));
+								btnModifica.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+										modificar();
+
+									}
+								});
+								
+										JButton btnNuevo = new JButton("Nuevo");
+										btnNuevo.setForeground(SystemColor.activeCaptionText);
+										btnNuevo.setFont(new Font("DejaVu Sans", Font.BOLD, 12));
+										btnNuevo.setBackground(UIManager.getColor("Button.shadow"));
+										GridBagConstraints gbc_btnNuevo = new GridBagConstraints();
+										gbc_btnNuevo.anchor = GridBagConstraints.NORTHWEST;
+										gbc_btnNuevo.insets = new Insets(0, 0, 0, 5);
+										gbc_btnNuevo.gridx = 2;
+										gbc_btnNuevo.gridy = 0;
+										panelBotones.add(btnNuevo, gbc_btnNuevo);
+										
+												btnNuevo.addActionListener(new ActionListener() {
+													public void actionPerformed(ActionEvent e) {
+														agregar();
+										
+													}
+												});
+								GridBagConstraints gbc_btnModifica = new GridBagConstraints();
+								gbc_btnModifica.anchor = GridBagConstraints.NORTHWEST;
+								gbc_btnModifica.insets = new Insets(0, 0, 0, 5);
+								gbc_btnModifica.gridx = 3;
+								gbc_btnModifica.gridy = 0;
+								panelBotones.add(btnModifica, gbc_btnModifica);
+						
+								JButton btnElimina = new JButton("Eliminar");
+								btnElimina.setBackground(UIManager.getColor("OptionPane.errorDialog.border.background"));
+								btnElimina.setForeground(Color.BLACK);
+								btnElimina.addActionListener(new ActionListener() {
+									public void actionPerformed(ActionEvent e) {
+										eliminar();
+									}
+								});
+								GridBagConstraints gbc_btnElimina = new GridBagConstraints();
+								gbc_btnElimina.anchor = GridBagConstraints.NORTHWEST;
+								gbc_btnElimina.gridx = 4;
+								gbc_btnElimina.gridy = 0;
+								panelBotones.add(btnElimina, gbc_btnElimina);
+		refrescar();
+	}
+	/**private void llenaCombo(){
+		Vector<String> listas = new Vector<String>();
+		listas.add("Proveedores");
+		listas.add("Productos");
+		
+		cboCategoria(listas);
+		
+	}**/
+
+	private void agregar() {
+		try {
+			AgregaModifica dialog = new AgregaModifica(this, this, null,true);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			refrescar();
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(this, "Problemas cargando formulario de nuevo producto.\n" + e1.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void eliminar() {
+		if (table.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un producto", "Error",
+					JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		Producto p = ((ModeloTablaProductos) table.getModel()).getLista().get(table.getSelectedRow());
+		if (JOptionPane.showConfirmDialog(this, "Está segur@ que desea eliminar el producto '" + p.getProducto() + "'?",
+				"Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+			try {
+				dao.delete(p);
+				refrescar();
+			} catch (PersistenciaException e) {
+				JOptionPane.showMessageDialog(this, "Problemas eliminando producto.\n"+e.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
+	private void modificar() {
+		if (table.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un producto", "Error",
+					JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		Producto p = ((ModeloTablaProductos) table.getModel()).getLista().get(table.getSelectedRow());
+		AgregaModifica dialog;
+		try {
+			dialog = new AgregaModifica(this, this, p,false);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			refrescar();
+		} catch (PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Problemas cargando formulario de edición.\n" + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+
+	private ProductoDAO dao = new ProductoDAO();
+
+	@Override
+	public void refrescar() {
+		try {
+			table.setModel(new ModeloTablaProductos(dao.list()));
+		} catch (PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Problemas cargando productos.\n" + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+}

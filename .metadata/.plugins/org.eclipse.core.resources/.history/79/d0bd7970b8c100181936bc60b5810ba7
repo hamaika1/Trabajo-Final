@@ -1,0 +1,39 @@
+package ar.com.mateo.Practico5;
+
+import java.util.ArrayList;
+
+public class Programador extends Empleado {
+
+	private ArrayList<String> lenjuageDominados = new ArrayList<String>();
+	private int lineasDeCodigoPorHora;
+
+	public Programador(){
+		
+	}
+	
+	public Programador(ArrayList<String> lenjuageDominados, int lineasDeCodigoPorHora) {
+		super();
+		this.lenjuageDominados = lenjuageDominados;
+		this.lineasDeCodigoPorHora = lineasDeCodigoPorHora;
+	}
+
+	public int getLineasDeCodigoPorHora() {
+		return lineasDeCodigoPorHora;
+	}
+
+	public void setLineasDeCodigoPorHora(int lineasDeCodigoPorHora) {
+		this.lineasDeCodigoPorHora = lineasDeCodigoPorHora;
+	}
+
+	public ArrayList<String> getLenjuageDominados() {
+		return lenjuageDominados;
+	}
+
+	public void setLenjuageDominados(ArrayList<String> lenjuageDominados) {
+		this.lenjuageDominados = lenjuageDominados;
+	}
+	public void llenaLista(String e){
+		lenjuageDominados.add(e);
+	}
+
+}

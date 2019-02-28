@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+	<add id="laf_1540257073775" name="SubstanceLegacyDefault" class-name="org.jvnet.substance.SubstanceLegacyDefaultLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257073984" name="SubstanceGemini" class-name="org.jvnet.substance.api.skin.SubstanceGeminiLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257073984" name="SubstanceGraphiteAqua" class-name="org.jvnet.substance.api.skin.SubstanceGraphiteAquaLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257073984" name="SubstanceMagellan" class-name="org.jvnet.substance.api.skin.SubstanceMagellanLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074049" name="SubstanceAutumn" class-name="org.jvnet.substance.skin.SubstanceAutumnLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074050" name="SubstanceBusinessBlackSteel" class-name="org.jvnet.substance.skin.SubstanceBusinessBlackSteelLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074050" name="SubstanceBusinessBlueSteel" class-name="org.jvnet.substance.skin.SubstanceBusinessBlueSteelLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074050" name="SubstanceBusiness" class-name="org.jvnet.substance.skin.SubstanceBusinessLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074050" name="SubstanceChallengerDeep" class-name="org.jvnet.substance.skin.SubstanceChallengerDeepLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074051" name="SubstanceCremeCoffee" class-name="org.jvnet.substance.skin.SubstanceCremeCoffeeLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074051" name="SubstanceCreme" class-name="org.jvnet.substance.skin.SubstanceCremeLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074051" name="SubstanceDustCoffee" class-name="org.jvnet.substance.skin.SubstanceDustCoffeeLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074051" name="SubstanceDust" class-name="org.jvnet.substance.skin.SubstanceDustLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074052" name="SubstanceEmeraldDusk" class-name="org.jvnet.substance.skin.SubstanceEmeraldDuskLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074052" name="SubstanceMagma" class-name="org.jvnet.substance.skin.SubstanceMagmaLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074052" name="SubstanceMistAqua" class-name="org.jvnet.substance.skin.SubstanceMistAquaLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074052" name="SubstanceMistSilver" class-name="org.jvnet.substance.skin.SubstanceMistSilverLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074052" name="SubstanceModerate" class-name="org.jvnet.substance.skin.SubstanceModerateLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074053" name="SubstanceNebulaBrickWall" class-name="org.jvnet.substance.skin.SubstanceNebulaBrickWallLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074053" name="SubstanceNebula" class-name="org.jvnet.substance.skin.SubstanceNebulaLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074053" name="SubstanceOfficeBlue2007" class-name="org.jvnet.substance.skin.SubstanceOfficeBlue2007LookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074053" name="SubstanceOfficeSilver2007" class-name="org.jvnet.substance.skin.SubstanceOfficeSilver2007LookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074054" name="SubstanceRavenGraphiteGlass" class-name="org.jvnet.substance.skin.SubstanceRavenGraphiteGlassLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074054" name="SubstanceRavenGraphite" class-name="org.jvnet.substance.skin.SubstanceRavenGraphiteLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074054" name="SubstanceRaven" class-name="org.jvnet.substance.skin.SubstanceRavenLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074054" name="SubstanceSahara" class-name="org.jvnet.substance.skin.SubstanceSaharaLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+	<add id="laf_1540257074055" name="SubstanceTwilight" class-name="org.jvnet.substance.skin.SubstanceTwilightLookAndFeel" jar-path="/home/mateo/Descargas/substance-lite.jar" category-id="__wbp_laf_root"/>
+</commands>

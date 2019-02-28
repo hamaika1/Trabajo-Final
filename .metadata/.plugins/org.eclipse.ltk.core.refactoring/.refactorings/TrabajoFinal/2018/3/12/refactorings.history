@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;TrabajoFinal&apos;&#x0A;- Original project: &apos;TrabajoFinal&apos;&#x0A;- Original element: &apos;ar.com.mateo.tpfinal.ui.llenaCombos.java&apos;" description="Delete element" element1="/src&lt;ar.com.mateo.tpfinal.ui{llenaCombos.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1521670841037" subPackages="false" version="1.0"/>
+</session>

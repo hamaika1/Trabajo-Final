@@ -1,0 +1,339 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import ar.com.mateo.tpfinal.jdbc.CategoriaDAO;
+import ar.com.mateo.tpfinal.jdbc.MarcaDAO;
+import ar.com.mateo.tpfinal.jdbc.PersistenciaException;
+import ar.com.mateo.tpfinal.jdbc.ProductoDAO;
+import ar.com.mateo.tpfinal.model.Categoria;
+import ar.com.mateo.tpfinal.model.Marca;
+import ar.com.mateo.tpfinal.model.Producto;
+
+import java.awt.GridBagLayout;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.JTextField;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.awt.event.ActionEvent;
+import javax.swing.JList;
+import javax.swing.JSplitPane;
+
+public class AgregaModificaProducto extends JDialog {
+
+	private final JPanel contentPanel = new JPanel();
+	private JTextField textid;
+	private JTextField textproducto;
+	private JTextField textprecio;
+	private JComboBox<Categoria> comboCategoria;
+	private JComboBox<Marca> comboMarca;
+	private Producto producto;
+
+	/**
+	 * Launch the application.
+	 */
+
+	/**
+	 * Create the dialog.
+	 */
+	public AgregaModificaProducto(Frame parent, boolean XBttn, Producto producto, boolean Alta)
+			throws PersistenciaException {
+		super(parent, true);
+		setAlwaysOnTop(true);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.producto = producto;
+		setBounds(100, 100, 450, 300);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		GridBagLayout gbl_contentPanel = new GridBagLayout();
+		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 1.0, 1.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		contentPanel.setLayout(gbl_contentPanel);
+		{
+			JLabel lblId = new JLabel("ID");
+			GridBagConstraints gbc_lblId = new GridBagConstraints();
+			gbc_lblId.anchor = GridBagConstraints.WEST;
+			gbc_lblId.insets = new Insets(0, 0, 5, 5);
+			gbc_lblId.gridx = 0;
+			gbc_lblId.gridy = 0;
+			contentPanel.add(lblId, gbc_lblId);
+		}
+		{
+			textid = new JTextField();
+			GridBagConstraints gbc_textid = new GridBagConstraints();
+			gbc_textid.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textid.insets = new Insets(0, 0, 5, 0);
+			gbc_textid.gridx = 3;
+			gbc_textid.gridy = 0;
+			contentPanel.add(textid, gbc_textid);
+			textid.setColumns(10);
+		}
+		{
+			JLabel lblProducto = new JLabel("Producto");
+			GridBagConstraints gbc_lblProducto = new GridBagConstraints();
+			gbc_lblProducto.anchor = GridBagConstraints.WEST;
+			gbc_lblProducto.insets = new Insets(0, 0, 5, 5);
+			gbc_lblProducto.gridx = 0;
+			gbc_lblProducto.gridy = 1;
+			contentPanel.add(lblProducto, gbc_lblProducto);
+		}
+		{
+			textproducto = new JTextField();
+			GridBagConstraints gbc_textproducto = new GridBagConstraints();
+			gbc_textproducto.insets = new Insets(0, 0, 5, 0);
+			gbc_textproducto.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textproducto.gridx = 3;
+			gbc_textproducto.gridy = 1;
+			contentPanel.add(textproducto, gbc_textproducto);
+			textproducto.setColumns(10);
+		}
+		{
+			JLabel lblPrecio = new JLabel("Precio");
+			GridBagConstraints gbc_lblPrecio = new GridBagConstraints();
+			gbc_lblPrecio.anchor = GridBagConstraints.WEST;
+			gbc_lblPrecio.insets = new Insets(0, 0, 5, 5);
+			gbc_lblPrecio.gridx = 0;
+			gbc_lblPrecio.gridy = 2;
+			contentPanel.add(lblPrecio, gbc_lblPrecio);
+		}
+		{
+			textprecio = new JTextField();
+			GridBagConstraints gbc_textprecio = new GridBagConstraints();
+			gbc_textprecio.insets = new Insets(0, 0, 5, 0);
+			gbc_textprecio.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textprecio.gridx = 3;
+			gbc_textprecio.gridy = 2;
+			contentPanel.add(textprecio, gbc_textprecio);
+			textprecio.setColumns(10);
+		}
+		{
+			JLabel lblMarca = new JLabel("Marca");
+			GridBagConstraints gbc_lblMarca = new GridBagConstraints();
+			gbc_lblMarca.anchor = GridBagConstraints.WEST;
+			gbc_lblMarca.insets = new Insets(0, 0, 5, 5);
+			gbc_lblMarca.gridx = 0;
+			gbc_lblMarca.gridy = 4;
+			contentPanel.add(lblMarca, gbc_lblMarca);
+		}
+		{
+			comboMarca = new JComboBox<Marca>();
+			GridBagConstraints gbc_comboMarca = new GridBagConstraints();
+			gbc_comboMarca.insets = new Insets(0, 0, 5, 0);
+			gbc_comboMarca.fill = GridBagConstraints.HORIZONTAL;
+			gbc_comboMarca.gridx = 3;
+			gbc_comboMarca.gridy = 4;
+			contentPanel.add(comboMarca, gbc_comboMarca);
+		}
+		{
+			JLabel lblCategoria = new JLabel("Categoria");
+			GridBagConstraints gbc_lblCategoria = new GridBagConstraints();
+			gbc_lblCategoria.anchor = GridBagConstraints.WEST;
+			gbc_lblCategoria.insets = new Insets(0, 0, 5, 5);
+			gbc_lblCategoria.gridx = 0;
+			gbc_lblCategoria.gridy = 5;
+			contentPanel.add(lblCategoria, gbc_lblCategoria);
+		}
+		{
+			comboCategoria = new JComboBox<Categoria>();
+			GridBagConstraints gbc_comboCategoria = new GridBagConstraints();
+			gbc_comboCategoria.insets = new Insets(0, 0, 5, 0);
+			gbc_comboCategoria.fill = GridBagConstraints.HORIZONTAL;
+			gbc_comboCategoria.gridx = 3;
+			gbc_comboCategoria.gridy = 5;
+			contentPanel.add(comboCategoria, gbc_comboCategoria);
+		}
+		{
+			JPanel panel = new JPanel();
+			GridBagConstraints gbc_panel = new GridBagConstraints();
+			gbc_panel.insets = new Insets(0, 0, 0, 5);
+			gbc_panel.fill = GridBagConstraints.BOTH;
+			gbc_panel.gridx = 0;
+			gbc_panel.gridy = 6;
+			contentPanel.add(panel, gbc_panel);
+			GridBagLayout gbl_panel = new GridBagLayout();
+			gbl_panel.columnWidths = new int[]{0, 0};
+			gbl_panel.rowHeights = new int[]{0, 0};
+			gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+			gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			panel.setLayout(gbl_panel);
+			{
+				JList list = new JList();
+				GridBagConstraints gbc_list = new GridBagConstraints();
+				gbc_list.fill = GridBagConstraints.BOTH;
+				gbc_list.gridx = 0;
+				gbc_list.gridy = 0;
+				panel.add(list, gbc_list);
+			}
+		}
+		{
+			JPanel panel = new JPanel();
+			GridBagConstraints gbc_panel = new GridBagConstraints();
+			gbc_panel.gridwidth = 2;
+			gbc_panel.insets = new Insets(0, 0, 0, 5);
+			gbc_panel.gridx = 1;
+			gbc_panel.gridy = 6;
+			contentPanel.add(panel, gbc_panel);
+			GridBagLayout gbl_panel = new GridBagLayout();
+			gbl_panel.columnWidths = new int[]{0, 0, 0};
+			gbl_panel.rowHeights = new int[]{0, 0, 0};
+			gbl_panel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+			gbl_panel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+			panel.setLayout(gbl_panel);
+			{
+				JButton button = new JButton("<<");
+				GridBagConstraints gbc_button = new GridBagConstraints();
+				gbc_button.gridx = 1;
+				gbc_button.gridy = 1;
+				panel.add(button, gbc_button);
+			}
+		}
+		{
+			JPanel panel = new JPanel();
+			GridBagConstraints gbc_panel = new GridBagConstraints();
+			gbc_panel.fill = GridBagConstraints.BOTH;
+			gbc_panel.gridx = 3;
+			gbc_panel.gridy = 6;
+			contentPanel.add(panel, gbc_panel);
+			GridBagLayout gbl_panel = new GridBagLayout();
+			gbl_panel.columnWidths = new int[]{0, 0};
+			gbl_panel.rowHeights = new int[]{0, 0};
+			gbl_panel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+			gbl_panel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+			panel.setLayout(gbl_panel);
+			{
+				JList list = new JList();
+				GridBagConstraints gbc_list = new GridBagConstraints();
+				gbc_list.fill = GridBagConstraints.BOTH;
+				gbc_list.gridx = 0;
+				gbc_list.gridy = 0;
+				panel.add(list, gbc_list);
+			}
+		}
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+							altaModifica(Alta);
+						} catch (PersistenciaException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						dispose();
+					}
+				});
+				okButton.setActionCommand("OK");
+				buttonPane.add(okButton);
+				getRootPane().setDefaultButton(okButton);
+			}
+			{
+				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+					}
+				});
+				cancelButton.setActionCommand("Cancel");
+				buttonPane.add(cancelButton);
+			}
+			init();
+			cancelaCampos(XBttn);
+		}
+	}
+
+	public void cancelaCampos(boolean XBttn) {
+		if (XBttn == true) {
+			textid.setEditable(false);
+			textid.setEnabled(false);
+
+		} else if (XBttn == false) {
+			textid.setEditable(true);
+			textid.setEnabled(true);
+		}
+		return;
+	}
+
+	private void init() throws PersistenciaException {
+		// Llenar combos
+		CategoriaDAO rDAO = new CategoriaDAO();
+		MarcaDAO pDAO = new MarcaDAO();
+		List<Categoria> categoria = rDAO.list();
+		comboCategoria
+				.setModel(new DefaultComboBoxModel<Categoria>(categoria.toArray(new Categoria[categoria.size()])));
+		List<Marca> marca = pDAO.list();
+		comboMarca.setModel(new DefaultComboBoxModel<Marca>(marca.toArray(new Marca[marca.size()])));
+
+		// Determinar si es agregar o editar
+		if (producto == null) {
+			setTitle("Nuevo producto");
+		} else {
+			setTitle("Edita producto");
+			textid.setText(producto.getIdProducto() + "");
+			textproducto.setText(producto.getProducto());
+			textprecio.setText(producto.getPrecio() + "");
+			textid.setEnabled(false);
+			comboCategoria.setSelectedItem(producto.getCategoria());
+			comboMarca.setSelectedItem(producto.getMarca());
+		}
+
+	}
+
+	private void altaModifica(boolean Alta) throws PersistenciaException {
+		CategoriaDAO cDAO = new CategoriaDAO();
+		MarcaDAO mDAO = new MarcaDAO();
+		ProductoDAO dao = new ProductoDAO();
+
+		List<Categoria> categoria = cDAO.list();
+		List<Marca> marca = mDAO.list();
+		try {
+			if (Alta) {
+
+				Categoria cat = categoria.get(comboCategoria.getSelectedIndex());
+				Marca mar = marca.get(comboMarca.getSelectedIndex());
+				Producto pd = new Producto(Integer.parseInt(textid.getText()), textproducto.getText(),
+						Double.parseDouble(textprecio.getText()), cat, mar);
+				dao.insert(pd);
+				return;
+
+			}
+
+			else {
+
+				Categoria cat = categoria.get(comboCategoria.getSelectedIndex());
+				Marca mar = marca.get(comboMarca.getSelectedIndex());
+				Producto pd = new Producto(textproducto.getText(), Double.parseDouble(textprecio.getText()), cat, mar);
+				dao.update(pd);
+				return;
+
+			}
+		} catch (
+
+		PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Error de persistensia.", "Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+			return;
+		}
+	}
+}

@@ -1,0 +1,178 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import ar.com.mateo.tpfinal.jdbc.PersistenciaException;
+import ar.com.mateo.tpfinal.jdbc.ProductoDAO;
+import ar.com.mateo.tpfinal.model.Producto;
+
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class Productos extends JFrame {
+
+	private JPanel contentPane;
+	private JTable table;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Productos frame = new Productos();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public Productos() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridheight = 8;
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 0;
+		gbc_scrollPane.gridy = 0;
+		contentPane.add(scrollPane, gbc_scrollPane);
+		
+		table = new JTable();
+		scrollPane.setColumnHeaderView(table);
+		
+		JPanel panelbotones = new JPanel();
+		GridBagConstraints gbc_panelbotones = new GridBagConstraints();
+		gbc_panelbotones.fill = GridBagConstraints.BOTH;
+		gbc_panelbotones.gridx = 0;
+		gbc_panelbotones.gridy = 8;
+		contentPane.add(panelbotones, gbc_panelbotones);
+		
+		JButton btnAgregraProducto = new JButton("Agr.Producto");
+		btnAgregraProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			agregar();
+			}
+		});
+		panelbotones.add(btnAgregraProducto);
+		
+		JButton btnModificaProducto = new JButton("Mdf.Producto");
+		btnModificaProducto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				modificar();
+			}
+		});
+		panelbotones.add(btnModificaProducto);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			dispose();
+			}
+			
+		});
+		panelbotones.add(btnCancelar);
+		
+		JButton btnAct = new JButton("Act");
+		btnAct.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			refrescar();
+			}
+		});
+		panelbotones.add(btnAct);
+		refrescar();
+	}
+	private void agregar() {
+		try {
+			AgregaModifica dialog = new  AgregaModifica(this, (EstadoOperacion) this, null,true );
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			refrescar();
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(this, "Problemas cargando formulario de nuevo producto.\n" + e1.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	private void eliminar() {
+		if (table.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un producto", "Error",
+					JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		Producto p = ((ModeloTablaProductos) table.getModel()).getLista().get(table.getSelectedRow());
+		if (JOptionPane.showConfirmDialog(this, "Está segur@ que desea eliminar el producto '" + p.getProducto() + "'?",
+				"Eliminar", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+			try {
+				dao.delete(p);
+				refrescar();
+			} catch (PersistenciaException e) {
+				JOptionPane.showMessageDialog(this, "Problemas eliminando producto.\n" + e.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
+	private void modificar() {
+		if (table.getSelectedRow() == -1) {
+			JOptionPane.showMessageDialog(this, "Debe seleccionar un producto", "Error",
+					JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
+		Producto p = ((ModeloTablaProductos) table.getModel()).getLista().get(table.getSelectedRow());
+		AgregaModifica dialog;
+		try {
+			dialog = new AgregaModifica(this, (EstadoOperacion) this, p, false);
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			refrescar();
+		} catch (PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Problemas cargando formulario de edición.\n" + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+
+	private ProductoDAO dao = new ProductoDAO();
+
+	public void refrescar() {
+		try {
+			table.setModel(new ModeloTablaProductos(dao.list()));
+		} catch (PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Problemas cargando productos.\n" + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
+}

@@ -1,0 +1,287 @@
+package ar.com.mateo.tpfinal.ui;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import ar.com.mateo.tpfinal.jdbc.*;
+import ar.com.mateo.tpfinal.model.Producto;
+import ar.com.mateo.tpfinal.model.Proveedor;
+import ar.com.mateo.tpfinal.model.Categoria;
+import ar.com.mateo.tpfinal.model.Marca;
+import ar.com.mateo.tpfinal.ui.*;
+
+public class AgregaModifica extends JDialog {
+
+	private static final long serialVersionUID = -9029911367974734603L;
+
+	private final JPanel contentPanel = new JPanel();
+	
+	
+	private EstadoOperacion estadoOperacion;
+	private JTextField txtId;
+	private JTextField txtProducto;
+	private JTextField txtPrecio;
+	private Producto producto;
+	private JComboBox<Marca> cboMarca;
+	private JComboBox<Categoria> cboCategoria;
+    private boolean alta;
+	/**
+	 * Create the dialog.
+	 * 
+	 * @throws PersistenciaException
+	 */
+	public AgregaModifica(Frame parent, EstadoOperacion estadoOperacion, Producto producto,boolean Alta)
+			throws PersistenciaException {
+		super(parent, true);
+		this.estadoOperacion = estadoOperacion;
+		this.producto = producto;
+		setBounds(100, 100, 525, 315);
+		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		GridBagLayout gbl_contentPanel = new GridBagLayout();
+		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		contentPanel.setLayout(gbl_contentPanel);
+		{
+			JLabel lblNewLabel = new JLabel("ID");
+			GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+			gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
+			gbc_lblNewLabel.gridx = 0;
+			gbc_lblNewLabel.gridy = 0;
+			contentPanel.add(lblNewLabel, gbc_lblNewLabel);
+		}
+		{
+			txtId = new JTextField();
+			GridBagConstraints gbc_txtId = new GridBagConstraints();
+			gbc_txtId.insets = new Insets(0, 0, 5, 0);
+			gbc_txtId.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtId.gridx = 1;
+			gbc_txtId.gridy = 0;
+			contentPanel.add(txtId, gbc_txtId);
+			txtId.setColumns(3);
+		}
+		{
+			JLabel lblDescripcin = new JLabel("Descripción");
+			GridBagConstraints gbc_lblDescripcin = new GridBagConstraints();
+			gbc_lblDescripcin.anchor = GridBagConstraints.EAST;
+			gbc_lblDescripcin.insets = new Insets(0, 0, 5, 5);
+			gbc_lblDescripcin.gridx = 0;
+			gbc_lblDescripcin.gridy = 1;
+			contentPanel.add(lblDescripcin, gbc_lblDescripcin);
+		}
+		{
+			txtProducto = new JTextField();
+			GridBagConstraints gbc_txtProducto = new GridBagConstraints();
+			gbc_txtProducto.insets = new Insets(0, 0, 5, 0);
+			gbc_txtProducto.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtProducto.gridx = 1;
+			gbc_txtProducto.gridy = 1;
+			contentPanel.add(txtProducto, gbc_txtProducto);
+			txtProducto.setColumns(10);
+		}
+		{
+			JLabel lblPrecio = new JLabel("Precio");
+			GridBagConstraints gbc_lblPrecio = new GridBagConstraints();
+			gbc_lblPrecio.anchor = GridBagConstraints.EAST;
+			gbc_lblPrecio.insets = new Insets(0, 0, 5, 5);
+			gbc_lblPrecio.gridx = 0;
+			gbc_lblPrecio.gridy = 2;
+			contentPanel.add(lblPrecio, gbc_lblPrecio);
+		}
+		{
+			txtPrecio = new JTextField();
+			GridBagConstraints gbc_txtPrecio = new GridBagConstraints();
+			gbc_txtPrecio.insets = new Insets(0, 0, 5, 0);
+			gbc_txtPrecio.fill = GridBagConstraints.HORIZONTAL;
+			gbc_txtPrecio.gridx = 1;
+			gbc_txtPrecio.gridy = 2;
+			contentPanel.add(txtPrecio, gbc_txtPrecio);
+			txtPrecio.setColumns(10);
+		}
+		{
+			JLabel lblRubro = new JLabel("Categoria");
+			GridBagConstraints gbc_lblRubro = new GridBagConstraints();
+			gbc_lblRubro.anchor = GridBagConstraints.EAST;
+			gbc_lblRubro.insets = new Insets(0, 0, 5, 5);
+			gbc_lblRubro.gridx = 0;
+			gbc_lblRubro.gridy = 3;
+			contentPanel.add(lblRubro, gbc_lblRubro);
+		}
+		{
+			cboCategoria = new JComboBox<Categoria>();
+			GridBagConstraints gbc_cboRubro = new GridBagConstraints();
+			gbc_cboRubro.insets = new Insets(0, 0, 5, 0);
+			gbc_cboRubro.fill = GridBagConstraints.HORIZONTAL;
+			gbc_cboRubro.gridx = 1;
+			gbc_cboRubro.gridy = 3;
+			contentPanel.add(cboCategoria, gbc_cboRubro);
+		}
+		{
+			JLabel lblProveedor = new JLabel("Marca");
+			GridBagConstraints gbc_lblProveedor = new GridBagConstraints();
+			gbc_lblProveedor.anchor = GridBagConstraints.EAST;
+			gbc_lblProveedor.insets = new Insets(0, 0, 5, 5);
+			gbc_lblProveedor.gridx = 0;
+			gbc_lblProveedor.gridy = 4;
+			contentPanel.add(lblProveedor, gbc_lblProveedor);
+		}
+		{
+			cboMarca = new JComboBox<Marca>();
+			GridBagConstraints gbc_cboMarca = new GridBagConstraints();
+			gbc_cboMarca.insets = new Insets(0, 0, 5, 0);
+			gbc_cboMarca.fill = GridBagConstraints.HORIZONTAL;
+			gbc_cboMarca.gridx = 1;
+			gbc_cboMarca.gridy = 4;
+			contentPanel.add(cboMarca, gbc_cboMarca);
+		}
+		{
+			JPanel buttonPane = new JPanel();
+			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+							try {
+								altaModifica(Alta);
+								dispose();
+							} catch (PersistenciaException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							
+						
+					}
+				});			
+				{
+					NuevoP jn= new NuevoP();
+					JFrame f=new JFrame();
+					f.getContentPane().add(jn);
+					jn.setVisible(false);
+					JButton btnProveedores = new JButton("Proveedores");
+					btnProveedores.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent e) {
+							jn.setVisible(true);
+						}
+					});
+					buttonPane.add(btnProveedores);
+				}
+				okButton.setActionCommand("OK");
+				buttonPane.add(okButton);
+				getRootPane().setDefaultButton(okButton);
+			}
+			{
+				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+						
+					}
+				});
+				cancelButton.setActionCommand("Cancel");
+				buttonPane.add(cancelButton);
+			}
+			init();
+		}
+	}	
+	private void init() throws PersistenciaException {
+		// Llenar combos
+		CategoriaDAO rDAO = new CategoriaDAO();
+		MarcaDAO pDAO = new MarcaDAO();
+		List<Categoria> rubros = rDAO.list();
+		cboCategoria.setModel(new DefaultComboBoxModel<Categoria>(rubros.toArray(new Categoria[rubros.size()])));
+		List<Marca> marca = pDAO.list();
+		cboMarca.setModel(new DefaultComboBoxModel<Marca>(marca.toArray(new Marca[marca.size()])));
+
+		// Determinar si es agregar o editar
+		if (producto == null) {
+			setTitle("Nuevo producto");
+		} else {
+			setTitle("Edita producto");
+			txtId.setText(producto.getIdProducto() + "");
+			txtProducto.setText(producto.getProducto());
+			txtPrecio.setText(producto.getPrecio() + "");
+			txtId.setEnabled(false);
+			cboCategoria.setSelectedItem(producto.getCategoria());
+			cboMarca.setSelectedItem(producto.getMarca());
+		}
+
+	}
+
+	private void altaModifica(boolean Alta) throws PersistenciaException {
+		CategoriaDAO rDAO = new CategoriaDAO();
+		MarcaDAO pDAO = new MarcaDAO();
+		ProductoDAO dao = new ProductoDAO();
+
+		List<Categoria> rubros = rDAO.list();
+		List<Marca> marca = pDAO.list();
+		try {
+			if (Alta) {
+
+				Categoria cat = rubros.get(cboCategoria.getSelectedIndex());
+				Marca mar = marca.get(cboMarca.getSelectedIndex());
+				Producto pr2 = new Producto(Integer.parseInt(txtId.getText()), txtProducto.getText(),
+						Double.parseDouble(txtPrecio.getText()), cat, mar);
+				dao.insert(pr2);
+				return;
+			}
+
+			else {
+
+				Categoria cat = rubros.get(cboCategoria.getSelectedIndex());
+				Marca mar = marca.get(cboMarca.getSelectedIndex());
+				Producto pr2 = new Producto(txtProducto.getText(), Double.parseDouble(txtPrecio.getText()), cat,
+						mar);
+				dao.update(pr2);
+				return;
+			}
+		} catch (
+
+		PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Error de persistensia.", "Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+			return;
+		}
+	}
+
+	private void ejecutaOperacion(boolean isAlta) {
+
+		ProductoDAO dao = new ProductoDAO();
+		try {
+			if (isAlta) {
+				dao.insert(producto);
+			} else {
+				dao.update(producto);
+			}
+			estadoOperacion.refrescar();
+			dispose();
+		} catch (PersistenciaException e) {
+			JOptionPane.showMessageDialog(this, "Problemas almacenando el producto.\n" + e.getMessage(), "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+}
+

@@ -1,0 +1,86 @@
+package ar.com.mateo.Practico5;
+
+public class Empleado {
+
+	private String nombre;
+	private int edad;
+	private String dni;
+	private double salario;
+	private boolean casado;
+	private double salarioConAumento;
+	public Empleado() {
+
+	}
+
+	public Empleado(String nombre, int edad, double salario, String dni, boolean casado) {
+		this.nombre = nombre;
+		this.salario = salario;
+		this.casado = casado;
+		this.dni = dni;
+		this.edad = edad;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public int getEdad() {
+		return edad;
+	}
+
+	public void setEdad(int edad) {
+		this.edad = edad;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public double getSalario() {
+		return salario;
+	}
+
+	public void setSalario(double salario) {
+		this.salario = salario;
+	}
+
+	public boolean isCasado() {
+		return casado;
+	}
+
+	public void setCasado(boolean casado) {
+		this.casado = casado;
+	}
+
+	public void clasificacionEdad() {
+		if (edad <= 21) {
+			System.out.println("Principiante");
+
+		} else if (edad >= 22 && edad <= 35) {
+			System.out.println("Intermedio");
+
+		} else if (edad > 35) {
+			System.out.println("Senior");
+		}
+	}
+	public String toString(){
+		String mensaje=null;
+		return mensaje+String.format("\nNombre= "+getNombre()+"\nEdad= "+getEdad()+"\nDNI= "+getDni()+"\nSalario= "+getSalario()+"\nCasado= "+isCasado()+"\nSalarioConAumento= "+salarioConAumento);
+		
+		
+	}
+	public double aumentaSalario(double aumento){	
+		return salarioConAumento=this.salario+aumento;
+	
+	}
+}
+
+
